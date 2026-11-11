@@ -1,0 +1,23 @@
+{
+  "name": "narendra-software",
+  "private": true,
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:portfolio": "pnpm --filter @narendra/portfolio dev",
+    "dev:dev-tools": "pnpm --filter @narendra/dev-tools dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "clean": "turbo run clean"
+  },
+  "devDependencies": {
+    "turbo": "^2.11.10",
+    "typescript": "^5.8.3"
+  }
+}

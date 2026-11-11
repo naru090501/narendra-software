@@ -1,0 +1,65 @@
+@import "tailwindcss";
+@source "../../../../packages/ui/src";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  --background: #f8fafc;
+  --foreground: #091326;
+  --card: #ffffff;
+  --card-foreground: #091326;
+  --primary: #0d2347;
+  --primary-foreground: #f8fafc;
+  --secondary: #e2e8f0;
+  --secondary-foreground: #0f172a;
+  --muted: #eef2f7;
+  --muted-foreground: #475569;
+  --accent: #0284c7;
+  --accent-foreground: #ffffff;
+  --border: #cbd5e1;
+  --ring: #0284c7;
+}
+
+.dark {
+  --background: #060e1d;
+  --foreground: #f1f5f9;
+  --card: #0c182e;
+  --card-foreground: #f1f5f9;
+  --primary: #38bdf8;
+  --primary-foreground: #061224;
+  --secondary: #152544;
+  --secondary-foreground: #e2e8f0;
+  --muted: #111f38;
+  --muted-foreground: #94a3b8;
+  --accent: #38bdf8;
+  --accent-foreground: #061224;
+  --border: #1e3358;
+  --ring: #38bdf8;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

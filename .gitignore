@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+.turbo/
+coverage/
+next-env.d.ts
+
+# Environment and local secrets
+.env
+.env*.local
+secure file.txt
+
+# Logs and caches
+*.log
+npm-debug.log*
+pnpm-debug.log*
+*.tsbuildinfo
+
+# .NET build artifacts (kept separate from pnpm)
+dotnet/**/bin/
+dotnet/**/obj/
+dotnet/**/.vs/
+dotnet/**/TestResults/
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
