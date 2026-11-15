@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { DEFAULT_PRODUCTS, filterProducts } from "@narendra/core";
 import { fetchProductCatalog } from "@narendra/supabase";
 import { ProductCard } from "../components/product-card";
+import DeveloperToolboxDocsPage from "../app/docs/developer-toolbox/page";
 import sitemap from "../app/sitemap.js";
 import {
   checkRateLimit,
@@ -57,10 +58,43 @@ describe("Portfolio product catalog integration", () => {
       expect(html).toContain("stable");
       expect(html).toContain("View Release Notes");
       expect(html).toContain("JSON formatter");
+      // Visit button verification
+      expect(html).toContain("Visit");
+      expect(html).toContain('href="https://narendra-dev-tools.vercel.app"');
+      expect(html).toContain("narendra-dev-tools.vercel.app");
+      expect(html).not.toContain("Independent URL pending deployment");
+      // Docs link verification
+      expect(html).toContain('href="/docs/developer-toolbox"');
+      expect(html).toContain("Docs");
     }
   });
 
-  it("publishes all five primary portfolio routes in sitemap when site URL is set", () => {
+  it("renders fallback indicator when product URL is missing", () => {
+    const plannedTool = DEFAULT_PRODUCTS.find((p) => p.slug === "document-tools");
+    expect(plannedTool).toBeDefined();
+    if (plannedTool) {
+      const html = renderToStaticMarkup(React.createElement(ProductCard, { product: plannedTool }));
+      expect(html).toContain("Independent URL pending deployment");
+      expect(html).not.toContain('href="https://narendra-dev-tools.vercel.app"');
+    }
+  });
+
+  it("renders Developer Toolbox documentation page with all 9 core sections", () => {
+    const html = renderToStaticMarkup(React.createElement(DeveloperToolboxDocsPage));
+    expect(html).toContain("Developer Toolbox Documentation");
+    expect(html).toContain("Introduction");
+    expect(html).toContain("Features &amp; Supported Utilities");
+    expect(html).toContain("JSON Formatting, Validation &amp; Minification");
+    expect(html).toContain("XML Formatting &amp; Validation");
+    expect(html).toContain("CSV to JSON &amp; JSON to CSV");
+    expect(html).toContain("Base64 Encoding &amp; Decoding");
+    expect(html).toContain("Multi-Task Text Transformation Pipeline");
+    expect(html).toContain("Privacy &amp; Local-First Processing");
+    expect(html).toContain("Usage Instructions &amp; Known Limitations");
+    expect(html).toContain("https://narendra-dev-tools.vercel.app");
+  });
+
+  it("publishes primary portfolio routes and developer docs in sitemap when site URL is set", () => {
     const prev = process.env.NEXT_PUBLIC_SITE_URL;
     process.env.NEXT_PUBLIC_SITE_URL = "https://portfolio.example.test";
     try {
@@ -72,6 +106,7 @@ describe("Portfolio product catalog integration", () => {
       expect(urls.some((u) => u.endsWith("/projects"))).toBe(true);
       expect(urls.some((u) => u.endsWith("/about"))).toBe(true);
       expect(urls.some((u) => u.endsWith("/contact"))).toBe(true);
+      expect(urls.some((u) => u.endsWith("/docs/developer-toolbox"))).toBe(true);
     } finally {
       if (prev === undefined) {
         delete process.env.NEXT_PUBLIC_SITE_URL;

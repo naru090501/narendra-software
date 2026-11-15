@@ -120,7 +120,8 @@ describe("@narendra/core product helpers", () => {
     const unsetProducts = getDefaultProducts({});
     const devToolsUnset = unsetProducts.find((p) => p.slug === "developer-toolbox");
     expect(devToolsUnset?.status).toBe("released");
-    expect(devToolsUnset?.url).toBeNull();
+    expect(devToolsUnset?.url).toBe("https://narendra-dev-tools.vercel.app");
+    expect(devToolsUnset?.documentationUrl).toBe("https://narendra-software.vercel.app/docs/developer-toolbox");
 
     const configuredProducts = getDefaultProducts({
       NEXT_PUBLIC_DEV_TOOLS_URL: "http://localhost:3001",

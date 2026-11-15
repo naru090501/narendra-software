@@ -41,7 +41,9 @@ export function getPlatformConfig(
     },
     channels: getContactChannels(env),
     products: {
-      developerToolboxUrl: resolveConfiguredProductUrl(env.NEXT_PUBLIC_DEV_TOOLS_URL),
+      developerToolboxUrl:
+        resolveConfiguredProductUrl(env.NEXT_PUBLIC_DEV_TOOLS_URL) ||
+        "https://narendra-dev-tools.vercel.app",
       defaultDocumentationBaseUrl: "/docs",
     },
   };

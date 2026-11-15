@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowUpRight, BookOpen, Clock, Globe, Info, Monitor, Tag } from "lucide-react";
 import { PRODUCT_CATEGORY_META, getProductRelease } from "@narendra/core";
 import type { Product } from "@narendra/types";
@@ -19,6 +20,25 @@ function formatDisplayHost(url: string): string {
   try {
     const parsed = new URL(url);
     return `${parsed.host}${parsed.pathname === "/" ? "" : parsed.pathname}`;
+  } catch {
+    return url;
+  }
+}
+
+function resolveDocsHref(url: string): string {
+  if (url.startsWith("/")) {
+    return url;
+  }
+  try {
+    const parsed = new URL(url);
+    if (
+      parsed.hostname === "narendra-software.vercel.app" ||
+      parsed.hostname === "narendrasoftware.com" ||
+      parsed.hostname === "localhost"
+    ) {
+      return `${parsed.pathname}${parsed.search}${parsed.hash}`;
+    }
+    return url;
   } catch {
     return url;
   }
@@ -90,13 +110,13 @@ export function ProductCard({ product }: { product: Product }) {
             </p>
 
             {product.documentationUrl ? (
-              <a
-                href={product.documentationUrl}
-                className="inline-flex items-center gap-1 font-sans text-xs text-muted-foreground hover:text-accent"
+              <Link
+                href={resolveDocsHref(product.documentationUrl)}
+                className="inline-flex items-center gap-1 font-sans text-xs text-muted-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
               >
                 <BookOpen className="h-3 w-3" aria-hidden="true" />
                 Docs
-              </a>
+              </Link>
             ) : null}
           </div>
 
@@ -134,6 +154,7 @@ export function ProductCard({ product }: { product: Product }) {
               href={product.url}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`Visit ${product.name}`}
               className={cn(
                 buttonVariants({
                   variant: isUnfinished ? "outline" : "primary",
@@ -142,7 +163,7 @@ export function ProductCard({ product }: { product: Product }) {
                 "w-full justify-between min-h-10",
               )}
             >
-              <span>Open Product</span>
+              <span>Visit</span>
               <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
             </a>
             {isUnfinished ? (

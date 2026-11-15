@@ -140,9 +140,9 @@ export function getDefaultProducts(
     ? process.env
     : {},
 ): Product[] {
-  const devToolsUrl = resolveConfiguredProductUrl(
-    env.NEXT_PUBLIC_DEV_TOOLS_URL,
-  );
+  const devToolsUrl =
+    resolveConfiguredProductUrl(env.NEXT_PUBLIC_DEV_TOOLS_URL) ||
+    "https://narendra-dev-tools.vercel.app";
 
   return [
     {
@@ -155,7 +155,7 @@ export function getDefaultProducts(
         "Local-first developer utilities for JSON, XML, CSV, Base64, and text processing.",
       category: "developer-toolbox",
       url: devToolsUrl,
-      documentationUrl: "/docs/developer-toolbox",
+      documentationUrl: "https://narendra-software.vercel.app/docs/developer-toolbox",
       iconUrl: null,
       status: "released",
       version: "0.1.0",
