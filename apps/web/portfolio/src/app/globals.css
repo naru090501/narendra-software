@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@source "../../../../packages/ui/src";
+@source "../../../../../packages/ui/src";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -83,6 +83,17 @@ input[type="number"] {
 /* Remove textarea resize handle by default */
 textarea {
   resize: none;
+}
+
+/* Standardize select controls: remove native arrow dropdown indicators */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select::-ms-expand {
+  display: none;
 }
 
 .bg-navy-grid {
