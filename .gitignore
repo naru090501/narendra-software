@@ -21,6 +21,8 @@ secure file.txt
 npm-debug.log*
 pnpm-debug.log*
 *.tsbuildinfo
+.temp/
+**/.temp/
 
 # .NET build artifacts (kept separate from pnpm)
 dotnet/**/bin/

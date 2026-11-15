@@ -65,6 +65,11 @@ export const PRODUCT_STATUS_META: Record<
   ProductStatus,
   { label: string; description: string; tone: "emerald" | "amber" | "sky" | "slate" | "neutral" }
 > = {
+  released: {
+    label: "Deployed",
+    description: "Generally available and deployed.",
+    tone: "emerald",
+  },
   live: {
     label: "Live",
     description: "Generally available and deployed.",
@@ -74,6 +79,11 @@ export const PRODUCT_STATUS_META: Record<
     label: "Beta",
     description: "Public preview undergoing active validation.",
     tone: "sky",
+  },
+  in_development: {
+    label: "In Development",
+    description: "Actively engineered on the current roadmap.",
+    tone: "amber",
   },
   "in-development": {
     label: "In Development",
@@ -85,9 +95,14 @@ export const PRODUCT_STATUS_META: Record<
     description: "Scoped in our product architecture and scheduled next.",
     tone: "slate",
   },
+  deprecated: {
+    label: "Deprecated",
+    description: "Deprecated and superseded.",
+    tone: "neutral",
+  },
   archived: {
     label: "Archived",
-    description: "Retired or superseded.",
+    description: "Retired or archived.",
     tone: "neutral",
   },
 };
@@ -114,8 +129,11 @@ export function resolveConfiguredProductUrl(rawUrl?: string): string | null {
 /**
  * Builds the fallback product registry used when Supabase credentials are not
  * configured in local development or offline builds.
- * Independent product URLs remain `null` until explicitly configured via env
- * (e.g. `NEXT_PUBLIC_DEV_TOOLS_URL`), avoiding unverified production URL claims.
+ * Sprint 5 specifies 4 products:
+ * 1. Developer Toolbox — deployed
+ * 2. Document Tools — planned
+ * 3. Image Tools — planned
+ * 4. Windows Disk & USB Utility — planned
  */
 export function getDefaultProducts(
   env: Record<string, string | undefined> = typeof process !== "undefined"
@@ -133,10 +151,18 @@ export function getDefaultProducts(
       slug: "developer-toolbox",
       description:
         "Standalone local-first JSON, XML, CSV, Base64, and text utilities engineered for instant feedback with zero unnecessary server uploads.",
+      shortDescription:
+        "Local-first developer utilities for JSON, XML, CSV, Base64, and text processing.",
       category: "developer-toolbox",
       url: devToolsUrl,
+      documentationUrl: "/docs/developer-toolbox",
       iconUrl: null,
-      status: "in-development",
+      status: "released",
+      version: "0.1.0",
+      supportedPlatforms: ["web"],
+      pricingModel: "free",
+      requiresRegistration: false,
+      requiresCloud: false,
       isFeatured: true,
       sortOrder: 10,
       createdAt: SEED_TIMESTAMP,
@@ -148,10 +174,18 @@ export function getDefaultProducts(
       slug: "document-tools",
       description:
         "Focused PDF, Excel, and structured document conversion and inspection utilities built with privacy-first local processing.",
+      shortDescription:
+        "Privacy-first document transformation and PDF inspection.",
       category: "document-tools",
       url: null,
+      documentationUrl: "/docs/document-tools",
       iconUrl: null,
-      status: "in-development",
+      status: "planned",
+      version: "0.1.0",
+      supportedPlatforms: ["web"],
+      pricingModel: "free",
+      requiresRegistration: false,
+      requiresCloud: false,
       isFeatured: true,
       sortOrder: 20,
       createdAt: SEED_TIMESTAMP,
@@ -163,10 +197,18 @@ export function getDefaultProducts(
       slug: "image-tools",
       description:
         "Browser-native image format conversion, lossless/lossy optimization, resizing, and metadata cleanup without server storage.",
+      shortDescription:
+        "Client-side image format conversion, compression, and metadata stripping.",
       category: "image-tools",
       url: null,
+      documentationUrl: "/docs/image-tools",
       iconUrl: null,
       status: "planned",
+      version: "0.1.0",
+      supportedPlatforms: ["web"],
+      pricingModel: "free",
+      requiresRegistration: false,
+      requiresCloud: false,
       isFeatured: true,
       sortOrder: 30,
       createdAt: SEED_TIMESTAMP,
@@ -174,46 +216,24 @@ export function getDefaultProducts(
     },
     {
       id: "00000000-0000-4000-8000-000000000104",
-      name: "Security Tools",
-      slug: "security-tools",
-      description:
-        "Client-side cryptographic hashing, checksum verification, entropy analysis, and privacy-preserving inspection utilities.",
-      category: "security-tools",
-      url: null,
-      iconUrl: null,
-      status: "planned",
-      isFeatured: false,
-      sortOrder: 40,
-      createdAt: SEED_TIMESTAMP,
-      updatedAt: SEED_TIMESTAMP,
-    },
-    {
-      id: "00000000-0000-4000-8000-000000000105",
-      name: "AI Tools",
-      slug: "ai-tools",
-      description:
-        "Selectively AI-powered workflows for structured transformation, summarization, and technical productivity where AI adds real value.",
-      category: "ai-tools",
-      url: null,
-      iconUrl: null,
-      status: "planned",
-      isFeatured: false,
-      sortOrder: 50,
-      createdAt: SEED_TIMESTAMP,
-      updatedAt: SEED_TIMESTAMP,
-    },
-    {
-      id: "00000000-0000-4000-8000-000000000106",
       name: "Windows Disk & USB Utility",
       slug: "windows-disk-usb-utility",
       description:
         "Native .NET 10 Windows utility for verified bootable USB creation, partition inspection, and safe drive formatting.",
+      shortDescription:
+        "Native Windows desktop application for safe USB and disk operations.",
       category: "windows-utilities",
       url: null,
+      documentationUrl: "/docs/windows-disk-usb-utility",
       iconUrl: null,
       status: "planned",
+      version: "0.1.0",
+      supportedPlatforms: ["windows"],
+      pricingModel: "free",
+      requiresRegistration: false,
+      requiresCloud: false,
       isFeatured: true,
-      sortOrder: 60,
+      sortOrder: 40,
       createdAt: SEED_TIMESTAMP,
       updatedAt: SEED_TIMESTAMP,
     },
@@ -223,8 +243,8 @@ export function getDefaultProducts(
 export const DEFAULT_PRODUCTS: Product[] = getDefaultProducts();
 
 /**
- * Truthful engineering showcases representing active platform foundations
- * and scoped product architectures — never fabricated client case studies.
+ * Engineering showcases representing active platform foundations
+ * and scoped product architectures.
  */
 export const PROJECT_SHOWCASES: ProjectShowcase[] = [
   {
@@ -236,7 +256,7 @@ export const PROJECT_SHOWCASES: ProjectShowcase[] = [
     description:
       "The foundational architecture powering Narendra Software: independent deployable web products backed by shared UI tokens, strict domain types, and a row-level-secured Supabase product registry with safe local fallbacks.",
     category: "platform",
-    status: "in-development",
+    status: "released",
     technologies: [
       "Next.js App Router",
       "TypeScript Strict",
@@ -264,7 +284,7 @@ export const PROJECT_SHOWCASES: ProjectShowcase[] = [
     description:
       "Designed so engineers never have to paste sensitive payloads into third-party servers. Every formatter, parser, and encoder runs deterministically on the client with keyboard-first navigation.",
     category: "developer-toolbox",
-    status: "in-development",
+    status: "released",
     technologies: ["React 19", "TypeScript", "Web Workers", "Client-Side Parsers"],
     highlights: [
       "100% browser-local execution with no payload telemetry",
@@ -285,7 +305,7 @@ export const PROJECT_SHOWCASES: ProjectShowcase[] = [
     description:
       "Built for professionals handling confidential invoices, spreadsheets, and reports who require predictable conversions without uploading files to unknown cloud buckets.",
     category: "document-tools",
-    status: "in-development",
+    status: "planned",
     technologies: ["TypeScript", "WebAssembly", "Stream Processing", "Shared UI"],
     highlights: [
       "Local file processing as the default architectural rule",

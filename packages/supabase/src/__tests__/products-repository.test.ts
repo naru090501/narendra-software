@@ -45,7 +45,7 @@ describe("@narendra/supabase config and fallback", () => {
     expect(result.notice).toBeTruthy();
   });
 
-  it("loads and maps active products when a configured Supabase client returns rows", async () => {
+  it("loads and maps active products with extended Sprint 5 schema", async () => {
     const fakeClient = {
       from: () => ({
         select: () => ({
@@ -58,10 +58,17 @@ describe("@narendra/supabase config and fallback", () => {
                     name: "Developer Toolbox",
                     slug: "developer-toolbox",
                     description: "Loaded from Supabase registry.",
+                    short_description: "Developer utilities",
                     category: "developer-toolbox",
                     url: "https://devtools.narendrasoftware.com",
+                    documentation_url: "/docs/developer-toolbox",
                     icon_url: null,
-                    status: "in-development",
+                    status: "released",
+                    version: "0.1.0",
+                    supported_platforms: ["web"],
+                    pricing_model: "free",
+                    requires_registration: false,
+                    requires_cloud: false,
                     is_featured: true,
                     sort_order: 10,
                     created_at: "2026-11-11T00:00:00Z",
@@ -83,6 +90,9 @@ describe("@narendra/supabase config and fallback", () => {
     expect(result.source).toBe("supabase");
     expect(result.products).toHaveLength(1);
     expect(result.products[0]?.name).toBe("Developer Toolbox");
+    expect(result.products[0]?.status).toBe("released");
+    expect(result.products[0]?.version).toBe("0.1.0");
+    expect(result.products[0]?.supportedPlatforms).toEqual(["web"]);
     expect(result.notice).toBeUndefined();
   });
 });

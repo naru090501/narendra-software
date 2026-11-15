@@ -68,3 +68,54 @@ export function createPublicSupabaseClient(
     },
   });
 }
+
+export interface SupabaseAdminConfig {
+  url: string;
+  serviceRoleKey: string;
+}
+
+export function getSupabaseAdminConfig(
+  env?: Record<string, string | undefined>,
+): SupabaseAdminConfig | null {
+  const currentEnv = env || process.env;
+  const url = (currentEnv.SUPABASE_URL || currentEnv.NEXT_PUBLIC_SUPABASE_URL)?.trim();
+  const serviceRoleKey = (
+    currentEnv.SUPABASE_SERVICE_ROLE_KEY || currentEnv.SUPABASE_SERVICE_KEY
+  )?.trim();
+
+  if (!url || !serviceRoleKey) {
+    return null;
+  }
+
+  if (isPlaceholder(url) || isPlaceholder(serviceRoleKey)) {
+    return null;
+  }
+
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol === "https:") {
+      return { url: parsed.origin, serviceRoleKey };
+    }
+    if (parsed.protocol === "http:" && isLocalHostname(parsed.hostname)) {
+      return { url: parsed.origin, serviceRoleKey };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+export function createServiceRoleSupabaseClient(
+  config: SupabaseAdminConfig | null = getSupabaseAdminConfig(),
+): SupabaseClient | null {
+  if (!config) {
+    return null;
+  }
+
+  return createClient(config.url, config.serviceRoleKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  });
+}

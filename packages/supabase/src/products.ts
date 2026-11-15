@@ -13,12 +13,14 @@ export interface FetchProductCatalogOptions {
 }
 
 const PRODUCT_SELECT_COLUMNS =
-  "id, name, slug, description, category, url, icon_url, status, is_featured, sort_order, created_at, updated_at";
+  "id, name, slug, description, short_description, category, url, documentation_url, icon_url, status, version, supported_platforms, pricing_model, requires_registration, requires_cloud, is_featured, sort_order, created_at, updated_at";
 
 const PUBLIC_PRODUCT_STATUSES = [
   "planned",
+  "in_development",
   "in-development",
   "beta",
+  "released",
   "live",
 ] as const;
 
