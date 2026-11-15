@@ -21,7 +21,7 @@ import {
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about Narendra Software's product-building vision, local-first architecture, and engineering principles.",
+    "Learn about Narendra Software, a personal software project creating 100% free, local-first web and Windows tools for everyone.",
 };
 
 const PRINCIPLES = [
@@ -57,14 +57,14 @@ export default function AboutPage() {
       <section className="max-w-3xl space-y-5">
         <SectionHeading
           eyebrow="About Narendra Software"
-          title="Building focused, dependable software tools under one brand"
-          description="Narendra Software is a software product organization dedicated to creating practical, well-crafted utilities for developers, technical teams, and everyday Windows and web users."
+          title="Building focused, dependable software tools for everyone"
+          description="Narendra Software is a personal software project created to build practical, well-crafted utilities for developers, students, creators, and everyday Windows and web users—100% free with no commercial gates."
         />
         <p className="text-base leading-relaxed text-muted-foreground">
-          Rather than bundling unrelated features into bloated suites or hiding
-          simple utilities behind mandatory sign-up walls, we build focused
-          applications—each dedicated to doing its core job reliably, quickly,
-          and transparently.
+          Rather than bundling bloated features, locking basic functions behind
+          paywalls, or forcing users through mandatory sign-up screens, Narendra
+          Software builds clean, focused tools—each dedicated to doing its job
+          reliably, privately, and completely free for everyone.
         </p>
       </section>
 

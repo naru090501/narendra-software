@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ArrowLeftRight } from "lucide-react";
-import { Button } from "@narendra/ui";
+import { Button, Select } from "@narendra/ui";
 import { csvToJson, jsonToCsv } from "@/lib/tools";
 import { EditorWorkspace, type EditorStatus } from "../editor-pane";
 
@@ -103,19 +103,18 @@ export function CsvTool() {
             <ArrowLeftRight className="h-3.5 w-3.5" aria-hidden="true" />
             Use Output as Input
           </Button>
-          <select
+          <Select
             aria-label="CSV delimiter"
             value={delimiter}
             onChange={(e) => {
               const value = e.target.value;
               setDelimiter(value === ";" ? ";" : value === "\t" ? "\t" : ",");
             }}
-            className="h-8 rounded-lg border border-border bg-background px-2.5 text-xs text-foreground"
           >
             <option value=",">Comma (,)</option>
             <option value=";">Semicolon (;)</option>
             <option value={"\t"}>Tab (\t)</option>
-          </select>
+          </Select>
           <label className="inline-flex cursor-pointer items-center gap-1.5 px-1 text-xs text-muted-foreground">
             <input
               type="checkbox"

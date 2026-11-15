@@ -58,8 +58,8 @@ export function ProductsExplorer({
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col gap-3 rounded-xl border border-border bg-card/80 p-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-start gap-2.5 text-xs text-muted-foreground sm:items-center">
+      <div className="flex flex-col items-start gap-3 rounded-xl border border-border bg-card/80 p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex min-w-0 items-start gap-2.5 text-xs leading-relaxed text-muted-foreground sm:items-center">
           {source === "supabase" ? (
             <Database
               className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500 sm:mt-0"
@@ -71,14 +71,17 @@ export function ProductsExplorer({
               aria-hidden="true"
             />
           )}
-          <span>
+          <span className="min-w-0 break-words">
             {source === "supabase"
               ? "Live registry connected to Supabase (narendramain)."
               : notice ??
                 "Displaying local development catalog fallback (Supabase not configured)."}
           </span>
         </div>
-        <Badge variant={source === "supabase" ? "emerald" : "navy"}>
+        <Badge
+          variant={source === "supabase" ? "emerald" : "navy"}
+          className="self-start sm:self-auto"
+        >
           {filteredProducts.length} of {products.length} products
         </Badge>
       </div>
@@ -128,9 +131,9 @@ export function ProductsExplorer({
           })}
         </div>
 
-        <div className="relative w-full lg:w-72">
+        <div className="relative w-full lg:w-80">
           <Search
-            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+            className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
             aria-hidden="true"
           />
           <Input
@@ -139,16 +142,16 @@ export function ProductsExplorer({
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search products..."
             aria-label="Search products"
-            className="pl-9 pr-9"
+            className="h-11 rounded-xl pl-10 pr-10 text-sm"
           />
           {query.length > 0 ? (
             <button
               type="button"
               onClick={() => setQuery("")}
               aria-label="Clear search query"
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded p-1 text-muted-foreground hover:text-foreground"
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-1 text-muted-foreground hover:text-foreground"
             >
-              <X className="h-3.5 w-3.5" aria-hidden="true" />
+              <X className="h-4 w-4" aria-hidden="true" />
             </button>
           ) : null}
         </div>

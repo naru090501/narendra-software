@@ -15,12 +15,12 @@ export function StatusBadge({ status }: { status: ProductStatus }) {
   const variant = TONE_TO_VARIANT[meta.tone];
 
   return (
-    <Badge variant={variant} title={meta.description}>
+    <Badge variant={variant} title={meta.description} className="min-h-7 px-3 py-1 text-xs">
       <span
-        className="h-1.5 w-1.5 rounded-full bg-current opacity-85"
+        className="h-2 w-2 rounded-full bg-current opacity-90"
         aria-hidden="true"
       />
-      {meta.label}
+      <span>{meta.label}</span>
     </Badge>
   );
 }

@@ -50,8 +50,8 @@ export default function ProjectsPage() {
             >
               <div>
                 <CardHeader className="space-y-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="min-w-0 font-mono text-xs uppercase tracking-wider text-muted-foreground">
                       {project.category === "platform"
                         ? "Core Platform"
                         : project.category}

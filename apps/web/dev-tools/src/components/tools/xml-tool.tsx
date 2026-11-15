@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@narendra/ui";
+import { Button, Select } from "@narendra/ui";
 import { formatXml, minifyXml, validateXml } from "@/lib/tools";
 import { EditorWorkspace, type EditorStatus } from "../editor-pane";
 
 const SAMPLE_XML = `<?xml version="1.0" encoding="UTF-8"?>
-<catalog company="Narendra Software">
+<catalog project="Narendra Software">
   <product slug="developer-toolbox" status="in-development">
     <name>Developer Toolbox</name>
     <processing mode="local-first" />
@@ -84,15 +84,14 @@ export function XmlTool() {
           <Button variant="outline" size="sm" onClick={handleValidate}>
             Validate
           </Button>
-          <select
+          <Select
             aria-label="XML indentation"
             value={String(indentSize)}
             onChange={(e) => setIndentSize(e.target.value === "4" ? 4 : 2)}
-            className="h-8 rounded-lg border border-border bg-background px-2.5 text-xs text-foreground"
           >
             <option value="2">2 spaces</option>
             <option value="4">4 spaces</option>
-          </select>
+          </Select>
           <Button
             variant="ghost"
             size="sm"

@@ -68,6 +68,23 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Remove number input spinner arrows across browsers */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Remove textarea resize handle by default */
+textarea {
+  resize: none;
+}
+
 .bg-navy-grid {
   background-image:
     linear-gradient(to right, rgb(56 189 248 / 0.06) 1px, transparent 1px),

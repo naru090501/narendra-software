@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@narendra/ui";
+import { Button, Select } from "@narendra/ui";
 import { formatJson, minifyJson, validateJson } from "@/lib/tools";
 import { EditorWorkspace, type EditorStatus } from "../editor-pane";
 
 const SAMPLE_JSON = JSON.stringify(
   {
-    organization: "Narendra Software",
+    project: "Narendra Software",
     product: "Developer Toolbox",
     localFirst: true,
     capabilities: ["JSON", "XML", "CSV", "Base64", "Text"],
@@ -93,19 +93,18 @@ export function JsonTool() {
           <Button variant="outline" size="sm" onClick={handleValidate}>
             Validate
           </Button>
-          <select
+          <Select
             aria-label="Indentation"
             value={String(indent)}
             onChange={(e) => {
               const val = e.target.value;
               setIndent(val === "\t" ? "\t" : val === "4" ? 4 : 2);
             }}
-            className="h-8 rounded-lg border border-border bg-background px-2.5 text-xs text-foreground"
           >
             <option value="2">2 spaces</option>
             <option value="4">4 spaces</option>
             <option value={"\t"}>Tab</option>
-          </select>
+          </Select>
           <Button
             variant="ghost"
             size="sm"

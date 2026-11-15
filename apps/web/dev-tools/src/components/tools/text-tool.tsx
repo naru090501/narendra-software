@@ -41,59 +41,59 @@ export function TextTool() {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-        <Card className="p-3.5">
+      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-6">
+        <Card className="p-3 sm:p-3.5">
           <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
             Characters
           </p>
-          <p className="mt-1 font-mono text-xl font-semibold text-foreground">
+          <p className="mt-1 truncate font-mono text-lg font-semibold text-foreground sm:text-xl">
             {stats.characters.toLocaleString()}
           </p>
         </Card>
-        <Card className="p-3.5">
+        <Card className="p-3 sm:p-3.5">
           <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
             No Spaces
           </p>
-          <p className="mt-1 font-mono text-xl font-semibold text-foreground">
+          <p className="mt-1 truncate font-mono text-lg font-semibold text-foreground sm:text-xl">
             {stats.charactersNoSpaces.toLocaleString()}
           </p>
         </Card>
-        <Card className="p-3.5">
+        <Card className="p-3 sm:p-3.5">
           <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
             Words
           </p>
-          <p className="mt-1 font-mono text-xl font-semibold text-foreground">
+          <p className="mt-1 truncate font-mono text-lg font-semibold text-foreground sm:text-xl">
             {stats.words.toLocaleString()}
           </p>
         </Card>
-        <Card className="p-3.5">
+        <Card className="p-3 sm:p-3.5">
           <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
             Lines
           </p>
-          <p className="mt-1 font-mono text-xl font-semibold text-foreground">
+          <p className="mt-1 truncate font-mono text-lg font-semibold text-foreground sm:text-xl">
             {stats.lines.toLocaleString()}
           </p>
         </Card>
-        <Card className="p-3.5">
+        <Card className="p-3 sm:p-3.5">
           <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
             Non-Empty Lines
           </p>
-          <p className="mt-1 font-mono text-xl font-semibold text-foreground">
+          <p className="mt-1 truncate font-mono text-lg font-semibold text-foreground sm:text-xl">
             {stats.nonEmptyLines.toLocaleString()}
           </p>
         </Card>
-        <Card className="p-3.5">
+        <Card className="p-3 sm:p-3.5">
           <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
             UTF-8 Bytes
           </p>
-          <p className="mt-1 font-mono text-xl font-semibold text-foreground">
+          <p className="mt-1 truncate font-mono text-lg font-semibold text-foreground sm:text-xl">
             {stats.bytes.toLocaleString()}
           </p>
         </Card>
       </div>
 
       <EditorWorkspace
-        inputLabel="Text Input (live metrics update as you type)"
+        inputLabel="Text Input"
         outputLabel="Cleaned Text Output"
         inputValue={input}
         outputValue={output}

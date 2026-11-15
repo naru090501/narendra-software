@@ -30,9 +30,9 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <Card className="flex h-full flex-col justify-between border-border/80 bg-card/90 hover:border-accent/50 hover:shadow-md">
-      <div>
-        <CardHeader className="space-y-4">
-          <div className="flex items-start justify-between gap-3">
+      <div className="min-w-0">
+        <CardHeader className="space-y-4 p-5 sm:p-6">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-primary/15 bg-primary/10 text-primary dark:border-sky-400/20 dark:bg-sky-400/10 dark:text-sky-300">
               <CategoryIcon
                 category={product.category}
@@ -44,17 +44,20 @@ export function ProductCard({ product }: { product: Product }) {
             <StatusBadge status={product.status} />
           </div>
 
-          <div className="space-y-1">
-            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          <div className="min-w-0 space-y-1.5 pt-1">
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               {categoryMeta.label}
             </p>
-            <CardTitle>{product.name}</CardTitle>
+            <CardTitle className="text-xl sm:text-2xl">{product.name}</CardTitle>
           </div>
         </CardHeader>
 
-        <CardContent className="space-y-3">
-          <CardDescription>{product.description}</CardDescription>
-          <p className="truncate font-mono text-xs text-muted-foreground">
+        <CardContent className="space-y-3 px-5 pb-5 sm:px-6 sm:pb-6">
+          <CardDescription className="text-sm leading-relaxed">{product.description}</CardDescription>
+          <p
+            className="break-words font-mono text-xs text-muted-foreground [overflow-wrap:anywhere]"
+            title={product.url ?? undefined}
+          >
             {product.url
               ? formatDisplayHost(product.url)
               : "Independent URL pending deployment"}
@@ -62,7 +65,7 @@ export function ProductCard({ product }: { product: Product }) {
         </CardContent>
       </div>
 
-      <CardFooter className="flex flex-col items-stretch gap-2 border-t border-border/60 pt-4">
+      <CardFooter className="mt-auto flex flex-col items-stretch gap-2.5 border-t border-border/60 p-5 sm:p-6">
         {product.url ? (
           <>
             <a
@@ -72,16 +75,16 @@ export function ProductCard({ product }: { product: Product }) {
               className={cn(
                 buttonVariants({
                   variant: isUnfinished ? "outline" : "primary",
-                  size: "sm",
+                  size: "md",
                 }),
-                "w-full justify-between",
+                "w-full justify-between min-h-10",
               )}
             >
               <span>Open Product</span>
-              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
             </a>
             {isUnfinished ? (
-              <p className="text-[11px] text-muted-foreground">
+              <p className="text-[11px] leading-snug text-muted-foreground">
                 Configured preview endpoint — product is{" "}
                 {product.status === "in-development"
                   ? "currently in development"
@@ -91,13 +94,13 @@ export function ProductCard({ product }: { product: Product }) {
             ) : null}
           </>
         ) : (
-          <div className="flex items-center justify-between rounded-lg border border-dashed border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
-            <span>
+          <div className="flex min-h-10 items-center justify-between gap-2.5 rounded-xl border border-dashed border-border/80 bg-muted/40 px-3.5 py-2.5 text-xs leading-normal text-muted-foreground">
+            <span className="min-w-0 break-words font-medium">
               {product.status === "in-development"
                 ? "Standalone deployment pending"
                 : "Planned — URL not yet assigned"}
             </span>
-            <Clock className="h-3.5 w-3.5 shrink-0 opacity-75" aria-hidden="true" />
+            <Clock className="h-4 w-4 shrink-0 opacity-75" aria-hidden="true" />
           </div>
         )}
       </CardFooter>

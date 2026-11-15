@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react";
 import { AlertCircle, Check, Copy, Info, Mail } from "lucide-react";
 import { validateContactInput } from "@narendra/core";
 import type { ContactFormInput, ContactValidationErrors } from "@narendra/types";
-import { Button, Input, Label, Textarea } from "@narendra/ui";
+import { Button, Input, Label, Select, Textarea } from "@narendra/ui";
 
 const INITIAL_VALUES: ContactFormInput = {
   name: "",
@@ -132,7 +132,7 @@ export function ContactForm() {
             type="email"
             value={values.email}
             onChange={(e) => updateField("email", e.target.value)}
-            placeholder="you@organization.com"
+            placeholder="you@example.com"
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? "contact-email-error" : undefined}
           />
@@ -150,13 +150,13 @@ export function ContactForm() {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="contact-org">Organization (optional)</Label>
+          <Label htmlFor="contact-org">Affiliation / Project (optional)</Label>
           <Input
             id="contact-org"
             name="organization"
             value={values.organization}
             onChange={(e) => updateField("organization", e.target.value)}
-            placeholder="Company or team name"
+            placeholder="Independent, student, team, or open source"
             aria-invalid={Boolean(errors.organization)}
             aria-describedby={
               errors.organization ? "contact-org-error" : undefined
@@ -175,7 +175,7 @@ export function ContactForm() {
 
         <div className="space-y-2">
           <Label htmlFor="contact-topic">Inquiry topic</Label>
-          <select
+          <Select
             id="contact-topic"
             name="topic"
             value={values.topic}
@@ -185,13 +185,14 @@ export function ContactForm() {
                 e.target.value as ContactFormInput["topic"],
               )
             }
-            className="flex h-10 w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            containerClassName="w-full"
+            className="h-11 w-full rounded-xl pl-3.5 pr-9 py-2.5 text-sm"
           >
-            <option value="collaboration">Collaboration &amp; Partnerships</option>
-            <option value="product-feedback">Product Feedback</option>
-            <option value="enterprise-inquiry">Enterprise Inquiry</option>
+            <option value="product-feedback">Product Feedback / Suggestion</option>
+            <option value="collaboration">Open Source &amp; Community</option>
+            <option value="enterprise-inquiry">Feature Request / Custom Need</option>
             <option value="general">General Question</option>
-          </select>
+          </Select>
         </div>
       </div>
 
@@ -248,7 +249,7 @@ export function ContactForm() {
             Your inquiry passed validation and is ready to send via your email
             client (not automatically transmitted by this static form).
           </p>
-          <pre className="overflow-x-auto rounded-lg border border-border bg-card p-3 font-mono text-xs text-muted-foreground">
+          <pre className="max-w-full overflow-x-auto whitespace-pre-wrap break-words rounded-lg border border-border bg-card p-3 font-mono text-xs text-muted-foreground">
             {validatedSummary}
           </pre>
           <div className="flex flex-wrap gap-2.5">

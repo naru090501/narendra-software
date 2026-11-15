@@ -64,9 +64,9 @@ export function EditorWorkspace({
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-card/80 p-3">
-        <div className="flex flex-wrap items-center gap-2">{actions}</div>
-        <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-2.5 rounded-xl border border-border bg-card/80 p-3">
+        <div className="flex min-w-0 flex-wrap items-center gap-2">{actions}</div>
+        <div className="flex w-full flex-wrap items-center justify-end gap-2 border-t border-border/60 pt-2 sm:w-auto sm:border-0 sm:pt-0">
           <Button
             variant="outline"
             size="sm"
@@ -116,18 +116,17 @@ export function EditorWorkspace({
           ) : (
             <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
           )}
-          <span className="leading-relaxed">{status.message}</span>
+          <span className="min-w-0 break-words leading-relaxed [overflow-wrap:anywhere]">
+            {status.message}
+          </span>
         </div>
       ) : null}
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <div className="flex flex-col space-y-2">
-          <div className="flex items-center justify-between gap-2">
-            <Label htmlFor="toolbox-input">{inputLabel}</Label>
-            <span className="font-mono text-[11px] text-muted-foreground">
-              {inputMeta ?? `${inputValue.length.toLocaleString()} chars`}
-            </span>
-          </div>
+      <div className="grid gap-5 lg:grid-cols-2">
+        <div className="flex min-w-0 flex-col space-y-2">
+          <Label htmlFor="toolbox-input" className="min-w-0 break-words text-sm font-medium text-foreground">
+            {inputLabel}
+          </Label>
           <Textarea
             id="toolbox-input"
             value={inputValue}
@@ -135,17 +134,19 @@ export function EditorWorkspace({
             onKeyDown={handleKeyDown}
             placeholder={inputPlaceholder}
             spellCheck={false}
-            className="min-h-[340px] resize-y font-mono text-xs leading-relaxed sm:min-h-[400px]"
+            className="min-h-[220px] resize-none p-4 sm:p-5 font-mono text-xs sm:text-[13px] leading-relaxed rounded-xl border-border/80 bg-card/40 focus:bg-background sm:min-h-[280px] lg:min-h-[420px]"
           />
-        </div>
-
-        <div className="flex flex-col space-y-2">
-          <div className="flex items-center justify-between gap-2">
-            <Label htmlFor="toolbox-output">{outputLabel}</Label>
-            <span className="font-mono text-[11px] text-muted-foreground">
-              {outputMeta ?? `${outputValue.length.toLocaleString()} chars`}
+          <div className="flex justify-end pt-1">
+            <span className="font-mono text-xs text-muted-foreground">
+              {inputMeta ?? `${inputValue.length.toLocaleString()} chars`}
             </span>
           </div>
+        </div>
+
+        <div className="flex min-w-0 flex-col space-y-2">
+          <Label htmlFor="toolbox-output" className="min-w-0 break-words text-sm font-medium text-foreground">
+            {outputLabel}
+          </Label>
           <Textarea
             id="toolbox-output"
             value={outputValue}
@@ -153,8 +154,13 @@ export function EditorWorkspace({
             placeholder={outputPlaceholder}
             spellCheck={false}
             aria-readonly="true"
-            className="min-h-[340px] resize-y bg-muted/35 font-mono text-xs leading-relaxed sm:min-h-[400px]"
+            className="min-h-[220px] resize-none p-4 sm:p-5 font-mono text-xs sm:text-[13px] leading-relaxed rounded-xl border-border/80 bg-muted/35 sm:min-h-[280px] lg:min-h-[420px]"
           />
+          <div className="flex justify-end pt-1">
+            <span className="font-mono text-xs text-muted-foreground">
+              {outputMeta ?? `${outputValue.length.toLocaleString()} chars`}
+            </span>
+          </div>
         </div>
       </div>
     </div>

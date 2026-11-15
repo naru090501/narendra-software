@@ -83,26 +83,25 @@ export default async function HomePage() {
           aria-hidden="true"
         />
 
-        <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <div className="relative mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
           <div className="max-w-3xl space-y-6">
             <Badge
               variant="navy"
-              className="border-sky-400/30 bg-sky-400/10 text-sky-300"
+              className="max-w-full min-h-8 border-sky-400/30 bg-sky-400/10 px-3.5 py-1.5 text-left text-xs font-medium text-sky-300 sm:whitespace-nowrap"
             >
-              <Terminal className="h-3.5 w-3.5" aria-hidden="true" />
-              Narendra Software &bull; Product Ecosystem Foundation
+              <Terminal className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+              <span>Narendra Software &bull; Personal Project &bull; 100% Free Tools</span>
             </Badge>
 
-            <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="break-words text-3xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
               Focused software tools, engineered for privacy and clarity.
             </h1>
 
             <p className="text-base leading-relaxed text-slate-300 sm:text-lg">
-              Narendra Software builds independent web utilities and native
-              Windows applications under one cohesive standard—spanning
-              developer toolkits, document workflows, image optimization,
-              security utilities, selective AI tools, and .NET 10 desktop
-              software.
+              A personal software project crafting independent web utilities and native
+              Windows applications—free and open for everyone. Built with local-first
+              privacy as the default across developer toolkits, document workflows, image
+              tools, security utilities, and .NET 10 desktop software.
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -118,7 +117,7 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/projects"
-                className="inline-flex h-11 items-center justify-center rounded-lg border border-slate-700 bg-slate-900/70 px-6 text-base font-medium text-slate-100 transition-colors hover:bg-slate-800"
+                className="inline-flex min-h-11 max-w-full items-center justify-center rounded-lg border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-center text-sm font-medium leading-snug text-slate-100 transition-colors hover:bg-slate-800 sm:px-6 sm:text-base"
               >
                 View Architecture &amp; Projects
               </Link>
@@ -168,7 +167,7 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
           {featuredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -309,14 +308,14 @@ export default async function HomePage() {
             <div className="max-w-2xl space-y-3">
               <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-sky-300">
                 <Cpu className="h-4 w-4" aria-hidden="true" />
-                Collaborate with Narendra Software
+                Connect with Narendra Software
               </div>
               <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                Questions about a product on our roadmap or want to collaborate?
+                Have feedback, suggestions, or ideas for these free tools?
               </h2>
               <p className="text-sm leading-relaxed text-slate-300 sm:text-base">
                 Share feedback on upcoming developer, document, or Windows
-                utilities, or reach out about technical partnerships.
+                utilities, suggest new features, or connect with the project.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -329,7 +328,7 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/about"
-                className="inline-flex h-11 items-center justify-center rounded-lg border border-slate-700 bg-slate-900/70 px-6 text-base font-medium text-slate-100 transition-colors hover:bg-slate-800"
+                className="inline-flex min-h-11 max-w-full items-center justify-center rounded-lg border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-center text-sm font-medium leading-snug text-slate-100 transition-colors hover:bg-slate-800 sm:px-6 sm:text-base"
               >
                 Our Vision
               </Link>

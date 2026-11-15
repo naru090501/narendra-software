@@ -14,5 +14,6 @@ export {
   SectionHeading,
   type SectionHeadingProps,
 } from "./components/section-heading.js";
+export { Select, type SelectProps } from "./components/select.js";
 export { Textarea, type TextareaProps } from "./components/textarea.js";
 export { cn } from "./lib/utils.js";

@@ -24,24 +24,26 @@ export const metadata: Metadata = {
     ? { metadataBase: new URL(siteUrl), alternates: { canonical: "/" } }
     : {}),
   title: {
-    default: "Narendra Software — Independent Web & Windows Product Studio",
+    default: "Narendra Software — Free & Local-First Web & Windows Utilities",
     template: "%s | Narendra Software",
   },
   description:
-    "Narendra Software builds independent, local-first web utilities and native .NET 10 Windows applications across developer, document, image, security, and AI tools.",
+    "A personal software project providing 100% free, local-first web utilities and native Windows tools for everyone. Zero tracking, zero forced sign-ups.",
   keywords: [
     "Narendra Software",
+    "Free Developer Tools",
     "Developer Toolbox",
     "Document Tools",
     "Image Tools",
     "Security Tools",
     "Windows Utilities",
     "Local-first software",
+    "Free software",
   ],
   openGraph: {
-    title: "Narendra Software — Independent Web & Windows Product Studio",
+    title: "Narendra Software — Free & Local-First Web & Windows Utilities",
     description:
-      "Focused software products engineered under one brand with local-first privacy and clean architecture.",
+      "A personal software project providing 100% free, local-first web utilities and native Windows tools for everyone.",
     type: "website",
     siteName: "Narendra Software",
   },

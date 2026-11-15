@@ -12,7 +12,7 @@
 ```text
 apps/
   web/
-    portfolio/        # Central company website & product directory (Next.js App Router)
+    portfolio/        # Central portfolio website & product directory (Next.js App Router)
 packages/
   types/              # Shared TypeScript domain contracts
   core/               # Catalog defaults, filtering, search, and contact validation

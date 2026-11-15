@@ -5,19 +5,19 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-card/60">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-4">
-          <div className="space-y-3 md:col-span-2">
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4 md:gap-10">
+          <div className="min-w-0 space-y-3 sm:col-span-2">
             <p className="text-base font-semibold tracking-tight text-foreground">
               Narendra Software
             </p>
             <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-              A software product organization building focused, independent web
+              A personal software project building focused, 100% free web
               utilities and native Windows applications with privacy-first local
-              processing as the default.
+              processing as the default. Free for everyone, with zero forced accounts.
             </p>
             <p className="text-xs text-muted-foreground">
-              No mandatory sign-up for everyday utilities. Independent
-              deployments backed by a unified platform foundation.
+              No mandatory sign-ups, paywalls, or telemetry for everyday tools.
+              Independent utilities built with quality and care.
             </p>
           </div>
 
@@ -41,7 +41,7 @@ export function SiteFooter() {
 
           <div className="space-y-3">
             <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-              Company
+              Navigation
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -81,8 +81,8 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-10 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>&copy; {new Date().getFullYear()} Narendra Software. All rights reserved.</p>
-          <p>Central Portfolio &bull; Platform Foundation</p>
+          <p>&copy; {new Date().getFullYear()} Narendra Software. Free and open software for everyone.</p>
+          <p>Personal Project &bull; Local-First Architecture</p>
         </div>
       </div>
     </footer>

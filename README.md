@@ -1,6 +1,6 @@
 # Narendra Software
 
-Central monorepo and company portfolio for **Narendra Software**—a product organization building independent, privacy-first web utilities and native .NET 10 Windows applications under one standard.
+Central monorepo and web portfolio for **Narendra Software**—a personal software project building independent, 100% free, privacy-first web utilities and native .NET 10 Windows applications under one standard.
 
 ## Product Ecosystem
 
@@ -16,7 +16,7 @@ Central monorepo and company portfolio for **Narendra Software**—a product org
 ```text
 apps/
   web/
-    portfolio/              # Next.js App Router central company website (@narendra/portfolio)
+    portfolio/              # Next.js App Router central portfolio website (@narendra/portfolio)
     dev-tools/              # Standalone Narendra Developer Toolbox app (@narendra/dev-tools)
 packages/
   types/                    # Shared TypeScript domain contracts (@narendra/types)

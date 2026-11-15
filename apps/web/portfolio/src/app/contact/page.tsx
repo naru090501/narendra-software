@@ -13,7 +13,7 @@ import { ContactForm } from "@/components/contact-form";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact Narendra Software for product feedback, collaboration, or technical inquiries.",
+    "Get in touch with Narendra Software for feedback, suggestions, or questions about these free tools.",
 };
 
 export default function ContactPage() {
@@ -22,17 +22,17 @@ export default function ContactPage() {
       <SectionHeading
         eyebrow="Get in Touch"
         title="Contact Narendra Software"
-        description="Have feedback on an upcoming tool, a technical collaboration proposal, or a question about our product ecosystem? Prepare your inquiry below."
+        description="Have feedback on an upcoming tool, a feature suggestion, or a question about this personal software project? Prepare your message below."
       />
 
       <div className="mt-10 grid gap-8 lg:grid-cols-3">
-        <div className="space-y-5">
+        <div className="min-w-0 space-y-5">
           <Card className="border-border/80">
             <CardHeader>
               <CardTitle className="text-base">Direct Channels</CardTitle>
               <CardDescription>
-                Reach out regarding product roadmaps, partnerships, or platform
-                inquiries.
+                Reach out regarding tool feedback, feature ideas, or general
+                questions.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4 text-sm">
@@ -41,11 +41,11 @@ export default function ContactPage() {
                   className="mt-0.5 h-4 w-4 shrink-0 text-accent"
                   aria-hidden="true"
                 />
-                <div>
+                <div className="min-w-0">
                   <p className="font-medium text-foreground">Email</p>
                   <a
                     href="mailto:contact@narendrasoftware.com"
-                    className="text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                    className="break-all text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
                   >
                     contact@narendrasoftware.com
                   </a>
@@ -58,9 +58,9 @@ export default function ContactPage() {
                   aria-hidden="true"
                 />
                 <div>
-                  <p className="font-medium text-foreground">Organization</p>
+                  <p className="font-medium text-foreground">Project</p>
                   <p className="text-muted-foreground">
-                    Narendra Software &bull; Product Studio
+                    Narendra Software &bull; Personal Project
                   </p>
                 </div>
               </div>
@@ -74,7 +74,7 @@ export default function ContactPage() {
                   <p className="font-medium text-foreground">Inquiry Scope</p>
                   <p className="text-muted-foreground">
                     Developer tools, document workflows, native Windows
-                    utilities, and collaborations.
+                    utilities, and community feedback.
                   </p>
                 </div>
               </div>

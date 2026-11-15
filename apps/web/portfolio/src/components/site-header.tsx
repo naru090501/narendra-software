@@ -19,9 +19,9 @@ export function BrandLogo() {
   return (
     <Link
       href="/"
-      className="group inline-flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md"
+      className="group inline-flex min-w-0 items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0d2347] text-sky-400 ring-1 ring-sky-400/30 shadow-sm dark:bg-sky-500/15">
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#0d2347] text-sky-400 ring-1 ring-sky-400/30 shadow-sm dark:bg-sky-500/15">
         <svg
           viewBox="0 0 24 24"
           className="h-5 w-5"
@@ -36,12 +36,12 @@ export function BrandLogo() {
           <path d="M5 18h14" className="opacity-45" />
         </svg>
       </span>
-      <span className="flex flex-col leading-none">
-        <span className="text-sm font-semibold tracking-tight text-foreground sm:text-base">
+      <span className="flex min-w-0 flex-col leading-none">
+        <span className="truncate text-sm font-semibold tracking-tight text-foreground sm:text-base">
           Narendra Software
         </span>
-        <span className="text-[11px] font-medium tracking-wide text-muted-foreground">
-          Product Engineering
+        <span className="truncate text-[11px] font-medium tracking-wide text-muted-foreground">
+          Free &bull; Local-First
         </span>
       </span>
     </Link>
@@ -85,11 +85,11 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <ThemeToggle />
           <Link
             href="/products"
-            className="hidden rounded-lg bg-primary px-3.5 py-2 text-xs font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 sm:inline-flex"
+            className="hidden shrink-0 whitespace-nowrap rounded-lg bg-primary px-3.5 py-2 text-xs font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 sm:inline-flex"
           >
             Explore Products
           </Link>
@@ -99,7 +99,7 @@ export function SiteHeader() {
             aria-expanded={mobileOpen}
             aria-controls="mobile-navigation"
             aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground hover:bg-muted md:hidden"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-card text-foreground hover:bg-muted md:hidden"
           >
             {mobileOpen ? (
               <X className="h-4 w-4" aria-hidden="true" />
@@ -139,6 +139,13 @@ export function SiteHeader() {
                 </Link>
               );
             })}
+            <Link
+              href="/products"
+              onClick={() => setMobileOpen(false)}
+              className="mt-2 inline-flex min-h-10 items-center justify-center rounded-lg bg-primary px-3.5 py-2 text-xs font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 sm:hidden"
+            >
+              Explore Products
+            </Link>
           </div>
         </nav>
       ) : null}
