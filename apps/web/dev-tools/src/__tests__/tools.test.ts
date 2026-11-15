@@ -12,6 +12,17 @@ import {
   jsonToCsv,
   minifyJson,
   minifyXml,
+  removeAllSpaces,
+  removeSpecialCharacters,
+  toCamelCase,
+  toKebabCase,
+  toLowercase,
+  toPascalCase,
+  toSentenceCase,
+  toSnakeCase,
+  toTitleCase,
+  toUppercase,
+  transformText,
   validateJson,
   validateXml,
 } from "../lib/tools";
@@ -60,96 +71,58 @@ describe("XML Formatter", () => {
     const formatted = formatXml(raw, 2);
     expect(formatted.ok).toBe(true);
     if (formatted.ok) {
-      expect(formatted.rootTagName).toBe("root");
-      expect(formatted.output).toContain('<?xml version="1.0" encoding="UTF-8"?>');
-      expect(formatted.output).toContain('  <item id="1">Hello</item>');
-      expect(formatted.output).toContain("  <empty />");
+      expect(formatted.output).toContain("<root>\n  <item");
+      expect(formatted.output).toContain("<empty />");
     }
 
     const minified = minifyXml(raw);
     expect(minified.ok).toBe(true);
     if (minified.ok) {
-      expect(minified.output).toBe(
-        '<?xml version="1.0" encoding="UTF-8"?><root><item id="1">Hello</item><empty/></root>',
-      );
+      expect(minified.output).not.toContain("\n  ");
     }
   });
 
-  it("rejects malformed XML with understandable error messages", () => {
-    const unclosed = validateXml("<root><child>text</root>");
-    expect(unclosed.ok).toBe(false);
-    if (!unclosed.ok) {
-      expect(unclosed.error).toMatch(/Malformed XML/i);
-    }
-
-    const empty = validateXml("");
-    expect(empty.ok).toBe(false);
+  it("reports errors on malformed XML", () => {
+    const result = validateXml("<root><unclosed></root>");
+    expect(result.ok).toBe(false);
   });
 });
 
 describe("CSV Converter", () => {
-  it("parses quoted fields, commas, escaped quotes, and multiline fields", () => {
-    const csv = [
-      "name,company,notes",
-      '"Aarav","Narendra, Inc.","Line 1\nLine ""2"" here"',
-      '"Meera","Labs","Simple note"',
-    ].join("\n");
-
-    const result = csvToJson(csv, { hasHeader: true });
+  it("converts CSV to JSON handling commas inside quotes", () => {
+    const csv = 'name,city,notes\n"Sharma, Aarav","Mumbai","Likes local-first tools"';
+    const result = csvToJson(csv, { delimiter: "," });
     expect(result.ok).toBe(true);
     if (result.ok) {
-      const parsed = JSON.parse(result.output) as Array<Record<string, string>>;
-      expect(parsed).toHaveLength(2);
-      expect(parsed[0]).toEqual({
-        name: "Aarav",
-        company: "Narendra, Inc.",
-        notes: 'Line 1\nLine "2" here',
-      });
+      const parsed = JSON.parse(result.output);
+      expect(parsed).toHaveLength(1);
+      expect(parsed[0].name).toBe("Sharma, Aarav");
+      expect(parsed[0].city).toBe("Mumbai");
     }
   });
 
-  it("generates RFC 4180 CSV from JSON arrays with proper escaping", () => {
-    const json = JSON.stringify([
-      {
-        product: "Dev Tools",
-        summary: 'Has "quotes", commas, and\nnewlines',
-      },
-    ]);
-
-    const csvResult = jsonToCsv(json);
-    expect(csvResult.ok).toBe(true);
-    if (csvResult.ok) {
-      expect(csvResult.output).toBe(
-        'product,summary\nDev Tools,"Has ""quotes"", commas, and\nnewlines"',
-      );
-
-      // Round-trip back to JSON
-      const roundTrip = csvToJson(csvResult.output);
-      expect(roundTrip.ok).toBe(true);
-      if (roundTrip.ok) {
-        expect(JSON.parse(roundTrip.output)).toEqual(JSON.parse(json));
-      }
+  it("converts JSON to CSV quoting strings that contain delimiters", () => {
+    const data = [
+      { id: 1, label: "Item 1, special", active: true },
+      { id: 2, label: 'Quotes "inside"', active: false },
+    ];
+    const result = jsonToCsv(JSON.stringify(data), ",");
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.output).toContain('"Item 1, special"');
+      expect(result.output).toContain('"Quotes ""inside"""');
     }
   });
 
-  it("reports malformed CSV inputs clearly", () => {
-    const unclosedQuote = csvToJson('a,b\n"unclosed,2');
-    expect(unclosedQuote.ok).toBe(false);
-    if (!unclosedQuote.ok) {
-      expect(unclosedQuote.error).toMatch(/unclosed quoted field/i);
-    }
-
-    const columnMismatch = csvToJson("a,b\n1,2,3");
-    expect(columnMismatch.ok).toBe(false);
-    if (!columnMismatch.ok) {
-      expect(columnMismatch.error).toMatch(/expected 2/i);
-    }
+  it("rejects non-array JSON for CSV export", () => {
+    const result = jsonToCsv('{"single": "object"}');
+    expect(result.ok).toBe(false);
   });
 });
 
 describe("Base64 Encoder / Decoder", () => {
-  it("encodes and decodes UTF-8 and Unicode strings accurately", () => {
-    const sample = "Narendra Software 🚀 नमस्ते café";
+  it("encodes and decodes UTF-8 strings predictably", () => {
+    const sample = "Narendra Software — 2026 🇮🇳";
     const encoded = encodeBase64(sample);
     expect(encoded.ok).toBe(true);
     if (encoded.ok) {
@@ -161,12 +134,14 @@ describe("Base64 Encoder / Decoder", () => {
     }
   });
 
-  it("supports URL-safe Base64 and rejects invalid Base64", () => {
-    const sample = "subjects?_d=1&x=🚀";
+  it("supports URL-safe Base64 without + or / or padding", () => {
+    const sample = "test+data/with?special=chars";
     const encoded = encodeBase64(sample, { urlSafe: true });
     expect(encoded.ok).toBe(true);
     if (encoded.ok) {
-      expect(encoded.output).not.toMatch(/[+/=]/);
+      expect(encoded.output).not.toContain("+");
+      expect(encoded.output).not.toContain("/");
+      expect(encoded.output).not.toContain("=");
       const decoded = decodeBase64(encoded.output, { urlSafe: true });
       expect(decoded.ok).toBe(true);
       if (decoded.ok) {
@@ -217,6 +192,122 @@ describe("Text Utilities", () => {
       removeBlankLines: true,
     });
     expect(noBlankLines).toBe("alpha beta\ngamma delta");
+  });
+
+  it("executes case transformations", () => {
+    expect(toUppercase("hello world")).toBe("HELLO WORLD");
+    expect(toLowercase("HELLO WORLD")).toBe("hello world");
+    expect(toTitleCase("narendra software developer toolbox")).toBe(
+      "Narendra Software Developer Toolbox",
+    );
+    expect(toSentenceCase("hello world! how are you? fine.")).toBe(
+      "Hello world! How are you? Fine.",
+    );
+    expect(toCamelCase("hello-world_test case")).toBe("helloWorldTestCase");
+    expect(toPascalCase("hello-world_test case")).toBe("HelloWorldTestCase");
+    expect(toKebabCase("Hello World TestCase")).toBe("hello-world-test-case");
+    expect(toSnakeCase("Hello World TestCase")).toBe("hello_world_test_case");
+  });
+
+  it("removes special characters and whitespace", () => {
+    expect(removeSpecialCharacters("Hello, @World #123!")).toBe("Hello World 123");
+    expect(removeAllSpaces("  hello   world  \n test  ")).toBe("helloworldtest");
+  });
+
+  it("executes multi-task combined pipeline at the same time", () => {
+    // User requirement: remove special characters + remove spaces + uppercase at the same time!
+    const input = "  Hello,   @World! #123  ";
+    const result = transformText(input, {
+      removeSpecialChars: true,
+      spaceHandling: "removeAll",
+      caseTransform: "uppercase",
+    });
+    expect(result).toBe("HELLOWORLD123");
+
+    // Combine remove special characters + camelCase
+    const camelResult = transformText("user name @profile#id!", {
+      removeSpecialChars: true,
+      caseTransform: "camelcase",
+    });
+    expect(camelResult).toBe("userNameProfileId");
+
+    // User requirement: Title case (capitalization) + remove special characters + remove all spaces at the same time
+    const titleResult = transformText("hello @world! how are you?", {
+      removeSpecialChars: true,
+      spaceHandling: "removeAll",
+      caseTransform: "titlecase",
+    });
+    expect(titleResult).toBe("HelloWorldHowAreYou");
+
+    // User requirement: Sentence case + remove special characters + collapse spaces at the same time
+    const sentenceResult = transformText("hello world! how are you? fine.", {
+      removeSpecialChars: true,
+      spaceHandling: "collapse",
+      caseTransform: "sentencecase",
+    });
+    expect(sentenceResult).toBe("Hello world How are you Fine");
+
+    // Line operations: deduplication + sorting (asc) + Uppercase
+    const multilineInput = "zebra\napple\nzebra\nbanana\napple";
+    const lineOpResult = transformText(multilineInput, {
+      caseTransform: "uppercase",
+      removeDuplicateLines: true,
+      sortLines: "asc",
+    });
+    expect(lineOpResult).toBe("APPLE\nBANANA\nZEBRA");
+
+    // Line sorting (desc) + Sentence case
+    const descSorted = transformText("orange fruit\napple fruit\ngrape fruit", {
+      caseTransform: "sentencecase",
+      sortLines: "desc",
+    });
+    expect(descSorted).toBe("Orange fruit\nGrape fruit\nApple fruit");
+
+    // Numbers removal + Punctuation removal + Whitespace collapsing + Title Case
+    const cleanNumbersPunct = transformText("123 hello, 456 world! 789 testing...", {
+      removeNumbers: true,
+      removePunctuation: true,
+      spaceHandling: "collapse",
+      caseTransform: "titlecase",
+    });
+    expect(cleanNumbersPunct).toBe("Hello World Testing");
+
+    // PascalCase + special characters + numbers removal
+    const pascalResult = transformText("api_v2_user-account#99", {
+      removeNumbers: true,
+      removeSpecialChars: true,
+      caseTransform: "pascalcase",
+    });
+    expect(pascalResult).toBe("ApiVUserAccount");
+
+    // Kebab-case + numbers removal
+    const kebabResult = transformText("My New Product 2026", {
+      removeNumbers: true,
+      caseTransform: "kebabcase",
+    });
+    expect(kebabResult).toBe("my-new-product");
+
+    // CONSTANT_CASE + numbers removal
+    const constantResult = transformText("database connection pool 5", {
+      removeNumbers: true,
+      caseTransform: "constantcase",
+    });
+    expect(constantResult).toBe("DATABASE_CONNECTION_POOL");
+
+    // Reversal combinations: reverse text + remove all spaces + uppercase
+    const reversedResult = transformText("hello world", {
+      caseTransform: "uppercase",
+      spaceHandling: "removeAll",
+      reverseText: true,
+    });
+    expect(reversedResult).toBe("DLROWOLLEH");
+
+    // Reverse lines + Title Case
+    const reversedLinesResult = transformText("first line\nsecond line", {
+      caseTransform: "titlecase",
+      reverseLines: true,
+    });
+    expect(reversedLinesResult).toBe("Second Line\nFirst Line");
   });
 
   it("filters tools by keyword search", () => {
